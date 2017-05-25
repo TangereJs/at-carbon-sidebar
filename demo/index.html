@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>at-carbon-sidebar demo page</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../at-carbon-sidebar.html">
+
+  <style type="text/css">
+    .sidebar-container {
+      width: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar-container">
+    <at-carbon-sidebar
+      items='[ { "id": "id1", "title": "title1", "icon": "now:about", "url": "https://www.google.com" }, { "id": "id2", "title": "title2", "icon": "now:about-filled", "url": "https://www.google.com" }, { "id": "id3", "title": "title3", "icon": "now:assistant", "url": "https://www.google.com" }, { "id": "id4", "title": "title4", "icon": "now:cards", "url": "https://www.google.com" } ]'
+      mode="icons"
+    ></at-carbon-sidebar>    
+  </div>
+</body>
+
+</html>

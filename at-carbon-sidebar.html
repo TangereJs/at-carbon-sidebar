@@ -1,0 +1,112 @@
+<link rel="import" href="../tangere/tangere.html" />
+<link rel="import" href="../at-theme/at-theme.html" />
+<link rel="import" href="../at-carbon-icon-color/at-carbon-icon-color.html" />
+<link rel="import" href="../at-link/at-link.html" />
+
+<dom-module id="at-carbon-sidebar">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      .item-icon {
+        display: table-cell;
+        box-sizing: border-box;
+        width: 39px;
+        height: 24px;
+        padding-right: 15px;
+      }
+
+      .item-link {
+        padding: 12px 20px;
+        display: table;
+        width: 100%;
+      }
+
+      .item-title {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .item-container {        
+        background: #FFAAAA;
+      }
+
+      .item-container:hover {
+        background: #FF6666;
+      }
+    </style>
+    <div hidden$="{{_computeHidden(mode)}}">
+      <template is="dom-repeat" items="{{items}}">
+        <div id="{{item.id}}" class="item-container">
+          <at-link href="{{item.url}}" class="item-link">
+            <at-carbon-icon-color icon="{{item.icon}}" class="item-icon"></at-carbon-icon-color>
+            <div class="item-title" hidden$="{{_computeIconsMode(mode)}}">{{item.title}}</div>
+          </at-link>        
+        </div>
+      </template>      
+    </div>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "at-carbon-sidebar",
+    properties: {
+      items: {
+        type: Array,
+        value: function() {
+          return [];
+        },
+        schmea: {
+          items: {
+            properties: {
+              id: {
+                type: String,
+                value: ""
+              },
+              title: {
+                type: String,
+                value: ""
+              },
+              icon: {
+                type: String,
+                value: "now:wrench"
+              },
+              url: {
+                type: String,
+                value: ""
+              }
+            }
+          }
+        },
+        xgridcols: "12"
+      },
+      mode: {
+        type: String,
+        value: "open",
+        xtype: "enum",
+        xvaluelist: [
+          { title: "Open", value: "open" },
+          { title: "Icons", value: "icons" },
+          { title: "Hidden", value: "hidden" },
+        ]
+      }
+    },
+    ready: function () {
+
+    },
+
+    _computeHidden: function(mode) {
+      return mode === "hidden";
+    },
+
+    _computeIconsMode: function(mode) {
+      return mode === "icons";
+    }
+  });
+</script>
