@@ -1,0 +1,9 @@
+{
+  "name": "at-carbon-sidebar",
+  "main": "at-carbon-sidebar.html",
+  "private": true,
+  "version": "1.0.0.0",
+  "dependencies": {
+    "tangere": "TangereJs/tangere#master"
+  }
+}
