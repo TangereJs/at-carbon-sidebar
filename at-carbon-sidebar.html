@@ -16,11 +16,11 @@
         box-sizing: border-box;
         width: 39px;
         height: 24px;
-        padding-right: 15px;
+        padding-right: 20px;
       }
 
       .item-link {
-        padding: 12px 20px;
+        padding: 12px 0 12px 20px;
         display: table;
         width: 100%;
       }
@@ -37,19 +37,59 @@
         background: #FFAAAA;
       }
 
-      .item-container:hover {
+      .item-container:hover, .item-container.opened {
         background: #FF6666;
       }
+
+      .mode-icons {
+        display: inline-block;
+        position: relative;
+      }
+
+      .popup-insert-point {
+        position: absolute;
+        min-width: 141px;
+        transition: top 150ms, bottom 150ms;
+      }
+
+      .popup-item-container {
+        background: #FF6666;        
+      }
+
+      .popup-item-link {
+        padding: 15px 0 15px 20px;
+        display: table;
+        width: 100%;
+      }
+
+      .popup-item-title {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-left: 12px;
+      }
+
     </style>
-    <div hidden$="{{_computeHidden(mode)}}">
+    <div hidden$="{{_computeHidden(mode)}}" class$="{{_computeClassList(mode)}}">
       <template is="dom-repeat" items="{{items}}">
-        <div id="{{item.id}}" class="item-container">
+        <div id="{{item.id}}" data-index$="{{index}}" class="item-container" on-mouseenter="_handleMouseEnter" on-mouseleave="_handleMouseLeave">
           <at-link href="{{item.url}}" class="item-link">
             <at-carbon-icon-color icon="{{item.icon}}" class="item-icon"></at-carbon-icon-color>
-            <div class="item-title" hidden$="{{_computeIconsMode(mode)}}">{{item.title}}</div>
-          </at-link>        
+            <div class="item-title" hidden$="{{_isIconsMode(mode)}}">{{item.title}}</div>
+          </at-link>
         </div>
-      </template>      
+      </template>
+      <div id="popupInsertPoint" class="popup-insert-point">
+        <template is="dom-if" if="{{_hasPopupItem(_popupItem)}}">
+          <div class="popup-item-container" on-mouseleave="_handleMouseLeave">
+            <at-link href="{{_popupItem.url}}" class="popup-item-link">            
+              <div class="popup-item-title">{{_popupItem.title}}</div>
+            </at-link>
+          </div>
+        </template>
+      </div>
     </div>
   </template>
 </dom-module>
@@ -64,7 +104,7 @@
         },
         schmea: {
           items: {
-            properties: {
+            roperties: {
               id: {
                 type: String,
                 value: ""
@@ -84,7 +124,7 @@
             }
           }
         },
-        xgridcols: "12"
+        xgridcols: "12"        
       },
       mode: {
         type: String,
@@ -97,6 +137,7 @@
         ]
       }
     },
+    
     ready: function () {
 
     },
@@ -105,8 +146,60 @@
       return mode === "hidden";
     },
 
-    _computeIconsMode: function(mode) {
+    _isIconsMode: function(mode) {
       return mode === "icons";
+    },
+
+    _computeClassList: function(mode) {
+      if (mode === "icons") { 
+        return "mode-icons";
+      }
+      return "";
+    },
+
+    _handleMouseEnter: function(event) {
+      if (this.mode !== "icons") { 
+        return;
+      }
+      
+      var selected = this.querySelectorAll('.item-container.opened');
+      selected.forEach(function(item, index){
+        item.classList.remove('opened');
+      });
+
+      var target = event.target;
+      target.classList.add('opened');
+      var clientRect = target.getBoundingClientRect();
+
+      this.$.popupInsertPoint.style.top = target.offsetTop + "px";
+      this.$.popupInsertPoint.style.left = clientRect.width + "px";
+
+      var index = parseInt(target.getAttribute('data-index'));
+      this._popupItem = this.items[index];
+    },
+
+    _handleMouseLeave: function(event) {
+      var current = event.relatedTarget;
+
+      while (current && current.id !== "popupInsertPoint") {
+        current = current.parentElement;
+      }
+
+      if (!current) { 
+        var selected = this.querySelectorAll('.item-container.opened');
+          selected.forEach(function(item, index){
+          item.classList.remove('opened');
+        });
+        this._popupItem = null;
+      } else {
+        // this._popupItem = null;
+      }
+
+    },
+
+    _hasPopupItem: function(popupItem) {
+      return popupItem != null;
     }
+
   });
 </script>
