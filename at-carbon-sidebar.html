@@ -11,6 +11,16 @@
         box-sizing: border-box;
       }
 
+      .item-container {
+        padding: 12px 0 12px 20px;
+        background: #FFAAAA;
+      }
+
+      .item-container:hover,
+      .item-container.opened {
+        background: #FF6666;
+      }
+
       .item-icon {
         display: table-cell;
         box-sizing: border-box;
@@ -20,9 +30,7 @@
       }
 
       .item-link {
-        padding: 12px 0 12px 20px;
-        display: table;
-        width: 100%;
+        display: block;
       }
 
       .item-title {
@@ -33,15 +41,6 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-      }
-
-      .item-container {
-        background: #FFAAAA;
-      }
-
-      .item-container:hover,
-      .item-container.opened {
-        background: #FF6666;
       }
 
       .mode-icons {
@@ -56,13 +55,8 @@
       }
 
       .popup-item-container {
-        background: #FF6666;
-      }
-
-      .popup-item-link {
         padding: 14px 0 14px 20px;
-        display: table;
-        width: 100%;
+        background: #FF6666;
       }
 
       .popup-item-title {
@@ -78,20 +72,20 @@
     </style>
     <div hidden$="{{_computeHidden(mode)}}" class$="{{_computeClassList(mode)}}">
       <template is="dom-repeat" items="{{items}}">
-        <div id="{{item.id}}" data-index$="{{index}}" class="item-container" on-mouseenter="_handleMouseEnter" on-mouseleave="_handleMouseLeave">
-          <at-link href="{{item.url}}" class="item-link">
+        <at-link href="{{item.url}}" class="item-link">
+          <div id="{{item.id}}" data-index$="{{index}}" class="item-container" on-mouseenter="_handleMouseEnter" on-mouseleave="_handleMouseLeave">
             <at-carbon-icon-color icon="{{item.icon}}" class="item-icon"></at-carbon-icon-color>
             <div class="item-title" hidden$="{{_isIconsMode(mode)}}">{{item.title}}</div>
-          </at-link>
-        </div>
+          </div>
+        </at-link>
       </template>
       <div id="popupInsertPoint" class="popup-insert-point">
         <template is="dom-if" if="{{_hasPopupItem(_popupItem)}}">
-          <div class="popup-item-container" on-mouseleave="_handleMouseLeave">
-            <at-link href="{{_popupItem.url}}" class="popup-item-link">
+          <at-link href="{{_popupItem.url}}" class="item-link">
+            <div class="popup-item-container" on-mouseleave="_handleMouseLeave">
               <div class="popup-item-title">{{_popupItem.title}}</div>
-            </at-link>
-          </div>
+            </div>
+          </at-link>
         </template>
       </div>
     </div>
