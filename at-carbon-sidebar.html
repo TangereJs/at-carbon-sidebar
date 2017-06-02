@@ -6,7 +6,7 @@
 <dom-module id="at-carbon-sidebar">
   <template>
     <style>
-      :host {
+       :host {
         display: block;
         box-sizing: border-box;
       }
@@ -35,11 +35,12 @@
         text-overflow: ellipsis;
       }
 
-      .item-container {        
+      .item-container {
         background: #FFAAAA;
       }
 
-      .item-container:hover, .item-container.opened {
+      .item-container:hover,
+      .item-container.opened {
         background: #FF6666;
       }
 
@@ -55,7 +56,7 @@
       }
 
       .popup-item-container {
-        background: #FF6666;        
+        background: #FF6666;
       }
 
       .popup-item-link {
@@ -74,7 +75,6 @@
         text-overflow: ellipsis;
         padding-left: 12px;
       }
-
     </style>
     <div hidden$="{{_computeHidden(mode)}}" class$="{{_computeClassList(mode)}}">
       <template is="dom-repeat" items="{{items}}">
@@ -88,7 +88,7 @@
       <div id="popupInsertPoint" class="popup-insert-point">
         <template is="dom-if" if="{{_hasPopupItem(_popupItem)}}">
           <div class="popup-item-container" on-mouseleave="_handleMouseLeave">
-            <at-link href="{{_popupItem.url}}" class="popup-item-link">            
+            <at-link href="{{_popupItem.url}}" class="popup-item-link">
               <div class="popup-item-title">{{_popupItem.title}}</div>
             </at-link>
           </div>
@@ -103,7 +103,7 @@
     properties: {
       items: {
         type: Array,
-        value: function() {
+        value: function () {
           return [];
         },
         schmea: {
@@ -128,7 +128,7 @@
             }
           }
         },
-        xgridcols: "12"        
+        xgridcols: "12"
       },
       mode: {
         type: String,
@@ -141,33 +141,33 @@
         ]
       }
     },
-    
+
     ready: function () {
 
     },
 
-    _computeHidden: function(mode) {
+    _computeHidden: function (mode) {
       return mode === "hidden";
     },
 
-    _isIconsMode: function(mode) {
+    _isIconsMode: function (mode) {
       return mode === "icons";
     },
 
-    _computeClassList: function(mode) {
-      if (mode === "icons") { 
+    _computeClassList: function (mode) {
+      if (mode === "icons") {
         return "mode-icons";
       }
       return "";
     },
 
-    _handleMouseEnter: function(event) {
-      if (this.mode !== "icons") { 
+    _handleMouseEnter: function (event) {
+      if (this.mode !== "icons") {
         return;
       }
-      
+
       var selected = this.querySelectorAll('.item-container.opened');
-      selected.forEach(function(item, index){
+      selected.forEach(function (item, index) {
         item.classList.remove('opened');
       });
 
@@ -182,16 +182,16 @@
       this._popupItem = this.items[index];
     },
 
-    _handleMouseLeave: function(event) {
+    _handleMouseLeave: function (event) {
       var current = event.relatedTarget;
 
       while (current && current.id !== "popupInsertPoint") {
         current = current.parentElement;
       }
 
-      if (!current) { 
+      if (!current) {
         var selected = this.querySelectorAll('.item-container.opened');
-          selected.forEach(function(item, index){
+        selected.forEach(function (item, index) {
           item.classList.remove('opened');
         });
         this._popupItem = null;
@@ -201,7 +201,7 @@
 
     },
 
-    _hasPopupItem: function(popupItem) {
+    _hasPopupItem: function (popupItem) {
       return popupItem != null;
     }
 
