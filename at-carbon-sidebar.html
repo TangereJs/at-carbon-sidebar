@@ -51,6 +51,9 @@
       .popup-insert-point {
         position: absolute;
         min-width: 141px;
+      }
+
+      .popup-insert-point.with-transition {
         transition: top 150ms, bottom 150ms;
       }
 
@@ -160,15 +163,18 @@
         return;
       }
 
-      var selected = this.querySelectorAll('.item-container.opened');
-      selected.forEach(function (item, index) {
-        item.classList.remove('opened');
-      });
-
       var target = event.target;
       target.classList.add('opened');
-      var clientRect = target.getBoundingClientRect();
 
+      var targetIndex = this._getAttributeAsNumber(target, 'data-index');
+      var diff = Math.abs(this._lastSelectedIndex - targetIndex);
+      if (diff > 1) {            
+        this.$.popupInsertPoint.classList.remove('with-transition');
+      } else {
+        this.$.popupInsertPoint.classList.add('with-transition');
+      }
+
+      var clientRect = target.getBoundingClientRect();
       this.$.popupInsertPoint.style.top = target.offsetTop + "px";
       this.$.popupInsertPoint.style.left = clientRect.width + "px";
 
@@ -189,10 +195,15 @@
           item.classList.remove('opened');
         });
         this._popupItem = null;
-      } else {
-        // this._popupItem = null;
+        if (selected.length) {
+          this._lastSelectedIndex = this._getAttributeAsNumber(selected[0], 'data-index');          
+        }
       }
+    },
 
+    _getAttributeAsNumber: function(element, attributeName) {
+      var valueString = element.getAttribute(attributeName);
+      return parseInt(valueString);
     },
 
     _hasPopupItem: function (popupItem) {
