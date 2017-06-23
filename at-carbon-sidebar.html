@@ -14,11 +14,13 @@
       .item-container {
         padding: 12px 0 12px 20px;
         @apply(--at-text-selected);
+        @apply(--at-carbon-sidebar-item-background-default);
       }
 
       .item-container:hover,
       .item-container.opened {
         @apply(--at-text-primary-selected);
+        @apply(--at-carbon-sidebar-item-background-selected);
       }
 
       .item-icon {
@@ -59,8 +61,9 @@
 
       .popup-item-container {
         padding: 14px 0 14px 20px;
-        @apply(--at-text-primary-selected);
         min-height: 20px;
+        @apply(--at-text-primary-selected);
+        @apply(--at-carbon-sidebar-item-background-selected);
       }
 
       .popup-item-title {
@@ -78,7 +81,7 @@
       <template is="dom-repeat" items="{{items}}">
         <at-link href="{{item.url}}" class="item-link">
           <div id="{{item.id}}" data-index$="{{index}}" class="item-container" on-mouseenter="_handleMouseEnter" on-mouseleave="_handleMouseLeave">
-            <at-carbon-icon-color icon="{{item.icon}}" class="item-icon"></at-carbon-icon-color>
+            <at-carbon-icon-color icon="{{item.icon}}" color="[[item.iconColor]]" class="item-icon"></at-carbon-icon-color>
             <div class="item-title" hidden$="{{_isIconsMode(mode)}}">{{item.title}}</div>
           </div>
         </at-link>
@@ -109,19 +112,24 @@
             properties: {
               id: {
                 type: String,
-                value: ""
+                default: ""
               },
               title: {
                 type: String,
-                value: ""
+                default: ""
               },
               icon: {
                 type: String,
-                value: "now:wrench"
+                default: "now:wrench"
+              },
+              iconColor: {                
+                type: String,
+                title: "Icon color",
+                default: "blue"
               },
               url: {
                 type: String,
-                value: ""
+                default: ""
               }
             }
           }
