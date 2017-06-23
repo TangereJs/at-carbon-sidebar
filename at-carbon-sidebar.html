@@ -13,12 +13,13 @@
 
       .item-container {
         padding: 12px 0 12px 20px;
-        background: #FFAAAA;
+        @apply(--at-text-selected);
+        /*background: #FFAAAA;*/
       }
 
       .item-container:hover,
       .item-container.opened {
-        background: #FF6666;
+        @apply(--at-text-primary-selected);
       }
 
       .item-icon {
@@ -59,7 +60,7 @@
 
       .popup-item-container {
         padding: 14px 0 14px 20px;
-        background: #FF6666;
+        @apply(--at-text-primary-selected);
       }
 
       .popup-item-title {
@@ -103,9 +104,9 @@
         value: function () {
           return [];
         },
-        schmea: {
+        schema: {
           items: {
-            roperties: {
+            properties: {
               id: {
                 type: String,
                 value: ""
