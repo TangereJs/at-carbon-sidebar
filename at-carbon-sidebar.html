@@ -52,6 +52,7 @@
 
       .popup-insert-point {
         position: absolute;
+        z-index: 1000;
         min-width: 141px;
       }
 
@@ -64,6 +65,7 @@
         min-height: 20px;
         @apply(--at-text-primary-selected);
         @apply(--at-carbon-sidebar-item-background-selected);
+        box-sizing: content-box;
       }
 
       .popup-item-title {
