@@ -15,6 +15,7 @@
         padding: 12px 0 12px 20px;
         @apply(--at-text-selected);
         @apply(--at-carbon-sidebar-item-background-default);
+        @apply(--layout-horizontal);
       }
 
       .item-container:hover,
@@ -24,11 +25,11 @@
       }
 
       .item-icon {
-        display: table-cell;
+        display: block;
         box-sizing: border-box;
-        width: 39px;
-        height: 24px;
-        padding-right: 20px;
+        min-width: 24px;
+        width: 24px;
+        height: 24px;        
       }
 
       .item-link {
@@ -37,16 +38,18 @@
 
       .item-title {
         @apply(--paper-font-body1);
+        @apply(--flex);
         font-size: 16px;
-        display: table-cell;
         vertical-align: middle;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        line-height: 24px;
+        margin-left: 20px;
       }
 
       .mode-icons {
-        display: inline-block;
+        /*display: inline-block;*/
         position: relative;
       }
 
@@ -61,7 +64,7 @@
       }
 
       .popup-item-container {
-        padding: 14px 0 14px 20px;
+        padding: 12px;
         min-height: 20px;
         @apply(--at-text-primary-selected);
         @apply(--at-carbon-sidebar-item-background-selected);
@@ -71,12 +74,11 @@
       .popup-item-title {
         @apply(--paper-font-body1);
         font-size: 16px;
-        display: table-cell;
-        vertical-align: middle;
+        display: flex;
+        line-height: 24px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        padding-left: 12px;
       }
     </style>
     <div hidden$="{{_computeHidden(mode)}}" class$="{{_computeClassList(mode)}}">
